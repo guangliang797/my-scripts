@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>歌词吉他谱 · 保姆级图解版</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f6f7f9; color: #222; line-height: 1.7;
+    max-width: 900px; margin: 0 auto; padding: 24px 16px 60px;
+  }
+  h1 { font-size: 24px; }
+  .sub { color: #666; font-size: 14px; margin: 4px 0 18px; }
+
+  .card {
+    background: #fff; border-radius: 12px; padding: 16px 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.08); margin-bottom: 16px;
+  }
+  .card h2 { font-size: 17px; margin-bottom: 10px; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 14px; margin-top: 6px; }
+  .dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; vertical-align: -2px; margin-right: 4px; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  button {
+    font-size: 16px; padding: 10px 22px; border: none; border-radius: 999px;
+    background: #2f6fed; color: #fff; cursor: pointer;
+  }
+  button:hover { background: #245bcc; }
+  .speed { display: flex; align-items: center; gap: 8px; font-size: 15px; }
+  input[type=range] { width: 150px; }
+  #bpmVal { font-weight: bold; min-width: 56px; }
+
+  .section-title { font-size: 16px; font-weight: bold; margin: 18px 0 10px; color: #444; }
+
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  @media (max-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .bar {
+    background: #fff; border: 2px solid transparent; border-radius: 10px;
+    padding: 8px 6px 10px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
+  .bar .chord { font-size: 20px; font-weight: bold; color: #2f6fed; }
+  .bar .lyric { font-size: 13px; color: #333; margin: 2px 0 6px; word-break: break-word; min-height: 34px; }
+  .beats { display: flex; justify-content: center; gap: 6px; }
+  .beat { width: 12px; height: 12px; border-radius: 50%; background: #e0e0e0; }
+  .beat.on { background: #ff8c1a; }
+  .bar.turn { border-color: #ffb020; }
+
+  .chords { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  @media (max-width: 720px) { .chords { grid-template-columns: repeat(2, 1fr); } }
+  .chord-card {
+    background: #fff; border: 3px solid transparent; border-radius: 12px;
+    padding: 10px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
+  .chord-card.now { border-color: #2f6fed; }
+  .chord-card h3 { font-size: 22px; color: #2f6fed; }
+  .chord-card .how { font-size: 13px; color: #555; margin: 4px 0 6px; }
+  svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+</style>
+</head>
+<body>
+
+<h1>歌词吉他谱（保姆级图解版）</h1>
+<div class="sub">C 大调 · 4/4 拍 · 默认 92 · 不用变调夹 · 只有 4 个和弦</div>
+
+<div class="card">
+  <h2>第 1 步：认识“弦”和“品”</h2>
+  <p>把吉他平放在腿上，低头看指板。指板上嵌的一根根金属丝叫<b>品丝</b>，品丝之间的格子叫<b>品</b>（从左往右数 1、2、3、4 品）。谱里说的“2 弦 1 品”就是：<b>从上往下数第 2 根弦，从左往右数第 1 格</b>。</p>
+  <div class="legend">
+    <span><span class="dot" style="background:#e74c3c"></span>1 = 食指</span>
+    <span><span class="dot" style="background:#2980d9"></span>2 = 中指</span>
+    <span><span class="dot" style="background:#27ae60"></span>3 = 无名指</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="controls">
+    <button id="playBtn">▶ 开始跟拍</button>
+    <div class="speed">速度 <input type="range" id="bpm" min="60" max="130" value="92"><span id="bpmVal">92 BPM</span></div>
+  </div>
+  <p style="font-size:13px;color:#888;margin-top:10px;">点开始后，每个格子的圆点会一拍一拍地闪并“滴”一声。<b>圆点闪一下就向下扫一下弦</b>。闪完 4 下 → 换下一个格子（下面指法图会亮蓝框，照着按）。</p>
+</div>
+
+<div class="section-title">主歌 A（闪 4 下 → 换格）</div>
+<div class="grid">
+  <div class="bar"><div class="chord">C</div><div class="lyric">Always uphold teacher 笑来</div><div class="beats"><span class="beat"></span><span class="beat"></span><span class="beat"></span><span class="beat"></span></div></div>
+  <div class="bar"><div class="chord">G</div><div class="lyric">always uphold community</div><div class="beats"><span class="beat"></span><span class="beat"></span><span class="beat"></span><span class="beat"></span></div></div>
+  <div class="bar"><div class="chord">Am</div><div class="lyric">always uphold 墙大</div><div class="beats"><span class="beat"></span><span class="beat"></span><span class="beat"></span><span class="beat"></span></div></div>
+  <div class="bar"><div class="chord">F</div><div class="lyric">always uphold teacher Wei</div><div class="beats"><span class="beat"></span><span class="beat"></span><span class="beat"></span><span class="beat"></span></div></div>
+</div>
+
+<div class="section-title">副歌 B</div>
+<div class="grid">
+  <div class="bar"><div class="chord">F</div><div class="lyric">always uphold family</div><div class="beats"><span class="beat"></span><span class="beat"></span><span class="beat"></span><span class="beat"></span></div></div>
+  <div class="bar"><div class="chord">G</div><div class="lyric">always uphold parents</div><div class="beats"><span class="beat"></span><span class="beat"></span><span class="beat"></span><span class="beat"></span></div></div>
+  <div class="bar"><div class="chord">C</div><div class="lyric">always focus on self growth</div><div class="beats"><span class="beat"></span><span class="beat"></span><span class="beat"></span><span class="beat"></span></div></div>
+  <div class="bar"><div class="chord">G</div><div class="lyric">I'm a producer, take me as my own student</div><div class="beats"><span class="beat"></span><span class="beat"></span><span class="beat"></span><span class="beat"></span></div></div>
+  <div class="bar"><div class="chord">F</div><div class="lyric">（尾奏）F</div><div class="beats"><span class="beat"></span><span class="beat"></span><span class="beat"></span><span class="beat"></span></div></div>
+  <div class="bar"><div class="chord">G</div><div class="lyric">（尾奏）G</div><div class="beats"><span class="beat"></span><span class="beat"></span><span class="beat"></span><span class="beat"></span></div></div>
+  <div class="bar"><div class="chord">C</div><div class="lyric">（结束）C</div><div class="beats"><span class="beat"></span><span class="beat"></span><span class="beat"></span><span class="beat"></span></div></div>
+  <div class="bar"><div class="chord">C</div><div class="lyric">　</div><div class="beats"><span class="beat"></span><span class="beat"></span><span class="beat"></span><span class="beat"></span></div></div>
+</div>
+
+<div class="section-title">左手放哪？（播放到哪个，哪个亮蓝框）</div>
+<div class="chords">
+  <div class="chord-card" id="card-C"><h3>C</h3><div class="how">2弦1品·4弦2品·5弦3品<br>从第 5 弦往下扫</div><div id="fb-C"></div></div>
+  <div class="chord-card" id="card-G"><h3>G</h3><div class="how">5弦2品·6弦3品·1弦3品<br>从第 6 弦往下扫</div><div id="fb-G"></div></div>
+  <div class="chord-card" id="card-Am"><h3>Am</h3><div class="how">2弦1品·4弦2品·3弦2品<br>从第 5 弦往下扫</div><div id="fb-Am"></div></div>
+  <div class="chord-card" id="card-F"><h3>F（小 F）</h3><div class="how">食指按住1、2弦1品<br>中指3弦2品·无名指4弦3品<br>从第 4 弦往下扫</div><div id="fb-F"></div></div>
+</div>
+
+<script>
+  // ===== 画指板图 =====
+  // 横向 6 条线 = 6 根弦（最上面是 1 弦，最细）；竖向 4 列 = 1~4 品
+  var FINGER_COLOR = { 1: '#e74c3c', 2: '#2980d9', 3: '#27ae60', 4: '#9b59b6' };
+  var X0 = 46, Y0 = 26, COL = 58, ROW = 30, R = 12;
+
+  function sx(stringNo) { return X0 + (stringNo - 1) * COL; }
+  function sy(fretNo)  { return Y0 + (fretNo - 1) * ROW; }
+
+  function drawBoard(elId, dots, barre) {
+    var s = '<svg viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg">';
+    var i;
+    for (i = 1; i <= 4; i++) s += '<text x="' + (sx(i) + 4) + '" y="16" font-size="12" fill="#888" text-anchor="middle">' + i + '</text>';
+    for (i = 1; i <= 6; i++) s += '<text x="30" y="' + (sy(i) + 4) + '" font-size="12" fill="#888" text-anchor="middle">' + i + '</text>';
+    for (i = 0; i < 6; i++) s += '<line x1="' + X0 + '" y1="' + sy(i + 1) + '" x2="' + sx(6) + '" y2="' + sy(i + 1) + '" stroke="#bbb" stroke-width="1.5"/>';
+    for (i = 1; i <= 6; i++) s += '<line x1="' + sx(i) + '" y1="' + Y0 + '" x2="' + sx(i) + '" y2="' + sy(6) + '" stroke="#bbb" stroke-width="1.5"/>';
+    if (barre) {
+      s += '<rect x="' + (X0 - 18) + '" y="' + (sy(barre.fret) - 13) + '" width="' + (sx(barre.to) - X0 + 36) + '" height="26" rx="13" fill="rgba(231,76,60,.35)" stroke="#e74c3c" stroke-width="2"/>';
+      s += '<text x="' + (X0 - 24) + '" y="' + (sy(barre.fret) + 4) + '" font-size="13" font-weight="bold" fill="#e74c3c">1</text>';
+    }
+    dots.forEach(function (d) {
+      var cx = sx(d.string), cy = sy(d.fret);
+      s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="' + FINGER_COLOR[d.finger] + '"/>';
+      s += '<text x="' + cx + '" y="' + (cy + 4.5) + '" font-size="13" font-weight="bold" fill="#fff" text-anchor="middle">' + d.finger + '</text>';
+    });
+    s += '</svg>';
+    document.getElementById(elId).innerHTML = s;
+  }
+
+  drawBoard('fb-C',  [{string:2, fret:1, finger:1},{string:4, fret:2, finger:2},{string:5, fret:3, finger:3}]);
+  drawBoard('fb-G',  [{string:5, fret:2, finger:1},{string:6, fret:3, finger:2},{string:1, fret:3, finger:3}]);
+  drawBoard('fb-Am', [{string:2, fret:1, finger:1},{string:3, fret:2, finger:3},{string:4, fret:2, finger:2}]);
+  drawBoard('fb-F',  [{string:3, fret:2, finger:2},{string:4, fret:3, finger:3}], {fret:1, to:2});
+
+  // ===== 跟拍播放 =====
+  var bars = Array.prototype.slice.call(document.querySelectorAll('.bar'));
+  var playBtn = document.getElementById('playBtn');
+  var bpmInput = document.getElementById('bpm');
+  var bpmVal = document.getElementById('bpmVal');
+  var timer = null, barIndex = 0, beatIndex = 0;
+  var audioCtx = null;
+
+  bpmInput.addEventListener('input', function () { bpmVal.textContent = bpmInput.value + ' BPM'; });
+
+  function beep(freq) {
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      var o = audioCtx.createOscillator(), g = audioCtx.createGain();
+      o.type = 'sine'; o.frequency.value = freq;
+      g.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.09);
+      o.connect(g); g.connect(audioCtx.destination);
+      o.start(); o.stop(audioCtx.currentTime + 0.1);
+    } catch (e) {}
+  }
+
+  function clearAll() {
+    bars.forEach(function (b) {
+      b.classList.remove('turn');
+      Array.prototype.forEach.call(b.querySelectorAll('.beat'), function (x) { x.classList.remove('on'); });
+    });
+    ['C','G','Am','F'].forEach(function (n) { document.getElementById('card-' + n).classList.remove('now'); });
+  }
+
+  function highlightChord(name) {
+    ['C','G','Am','F'].forEach(function (n) { document.getElementById('card-' + n).classList.toggle('now', n === name); });
+  }
+
+  function stop() {
+    if (timer) { clearTimeout(timer); timer = null; }
+    clearAll(); barIndex = 0; beatIndex = 0;
+    playBtn.textContent = '▶ 开始跟拍';
+  }
+
+  function tick() {
+    if (barIndex >= bars.length) { stop(); return; }
+    var bar = bars[barIndex];
+    if (beatIndex === 0) {
+      bar.classList.add('turn');
+      bar.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      highlightChord(bar.querySelector('.chord').textContent.trim());
+    }
+    var beats = bar.querySelectorAll('.beat');
+    if (beatIndex > 0) beats[beatIndex - 1].classList.remove('on');
+    beats[beatIndex].classList.add('on');
+    beep(beatIndex === 0 ? 1320 : 880);
+    beatIndex++;
+    if (beatIndex >= 4) { beatIndex = 0; barIndex++; }
+    timer = setTimeout(tick, 60000 / parseInt(bpmInput.value, 10));
+  }
+
+  playBtn.addEventListener('click', function () {
+    if (timer) { stop(); return; }
+    barIndex = 0; beatIndex = 0;
+    playBtn.textContent = '⏸ 暂停';
+    tick();
+  });
+</script>
+
+</body>
+</html>
