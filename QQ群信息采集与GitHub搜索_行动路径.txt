@@ -1,0 +1,108 @@
+========================================
+手机 QQ 群信息采集 + GitHub 搜索 行动路径
+整理时间：2026-11-07
+========================================
+
+【一、任务目标】
+1. 通过无线 ADB 连接手机，从 QQ 班级群截图采集文字信息（20屏）
+2. 在 GitHub 搜索更好的手机自动化/信息采集工具
+
+【二、手机 QQ 群截图采集 — 操作步骤】
+
+前置条件：
+- 手机已开启「无线调试」，电脑已通过 ADB 连接
+- 手机上 QQ 已打开目标群聊
+- 连接地址示例：adb connect 172.20.10.3:41993
+
+步骤 1：确认手机连接和当前界面
+  adb devices                          # 查看设备是否在线
+  adb shell "dumpsys activity activities | grep topResumedActivity"   # 确认 QQ 在前台
+
+步骤 2：创建输出文件夹（默认放 ~/mimo-test/）
+  mkdir -p ~/mimo-test/qq_class_group_info/texts
+
+步骤 3：逐屏截图 + 提取文字（核心循环）
+  # 每屏做 3 件事：截图、提取 UI 文字、上滑
+  adb shell screencap -p /sdcard/shot_NN.png
+  adb pull /sdcard/shot_NN.png ~/mimo-test/qq_class_group_info/
+  
+  adb shell uiautomator dump /sdcard/ui_NN.xml
+  adb pull /sdcard/ui_NN.xml ~/mimo-test/qq_class_group_info/texts/
+  
+  # 从下往上滑动（查看更早消息）
+  adb shell input swipe 540 1800 540 600 300
+
+步骤 4：汇总所有文字
+  用 Python 解析 XML，过滤 UI 噪音（LV等级、群名、界面按钮等），输出汇总 txt
+
+步骤 5：进一步整理成待办清单
+  提取截止日期、负责人、待办事项，生成 Markdown 清单
+
+【三、踩坑记录 & 改进方法】
+
+| 问题 | 现象 | 改进方法 |
+|------|------|---------|
+| 滑动重叠太多 | 第2~5屏内容几乎一样 | 加大滑动距离或检测重复内容自动去重 |
+| 文字噪音 | LV82 管理员、群名等混入 | 过滤规则加入更多 UI 关键词 |
+| 时间与消息脱离 | 不知道哪条消息是什么时候发的 | 同时提取时间戳节点并关联到消息 |
+| 文件夹创建被拒 | 第一次建到 ~/ 根目录被拒绝 | 默认放 ~/mimo-test/ 里面 |
+| 覆盖范围有限 | 4387条未读只看了20屏 | 可增加屏数或用"跳到最早"功能 |
+
+【四、GitHub 搜索 — 操作步骤】
+
+步骤 1：确认搜索工具可用性
+  - websearch 可能不可用 → 备用方案：webfetch 直接访问 GitHub 搜索页
+  - 也可以用 curl + GitHub API 搜索
+
+步骤 2：多组关键词扩大搜索范围
+  推荐关键词（至少用 3-4 组）：
+  - android adb screenshot automation
+  - android screen scrape python
+  - QQ 聊天记录 提取
+  - ADB UI automation tool
+  - android OCR screenshot
+  - scrcpy automation
+
+步骤 3：筛选和对比
+  - 按星标数排序
+  - 看最近更新时间（太旧的不选）
+  - 看 README 是否容易上手
+
+步骤 4：搜索 GitHub 的替代方式（网页打不开时）
+  # 用 GitHub API 搜索仓库：
+  curl -s "https://api.github.com/search/repositories?q=关键词&sort=stars&per_page=5"
+  
+  # 查看具体仓库文件：
+  curl -s "https://api.github.com/repos/用户名/仓库名/contents/"
+
+【五、本次搜索结果】
+- 搜 "android adb screenshot automation swipe" 仅 4 个 0 星项目
+- 结论：目前没有明显比手动 ADB 截图更好的现成方案
+- 但 GitHub 搜索范围太窄（下次需扩大关键词）
+
+【六、输出物】
+- ~/mimo-test/qq_class_group_info/QQ班级群信息汇总.txt   ← 20屏完整文字
+- ~/mimo-test/qq_class_group_info/班级信息整理_待办清单.md ← 整理后的待办
+- ~/mimo-test/qq_class_group_info/shot_01~20.png          ← 截图存档
+
+【七、常用命令速查】
+
+连接手机：
+  adb connect 172.20.10.3:41993
+
+查看当前前台应用：
+  adb shell "dumpsys activity activities | grep topResumedActivity"
+
+截图并保存到电脑：
+  adb shell screencap -p /sdcard/tmp.png && adb pull /sdcard/tmp.png ./
+
+提取界面文字：
+  adb shell uiautomator dump /sdcard/ui.xml && adb pull /sdcard/ui.xml ./
+
+上滑（看更早消息）：
+  adb shell input swipe 540 1800 540 600 300
+
+下滑（看最新消息）：
+  adb shell input swipe 540 600 540 1800 300
+
+========================================
